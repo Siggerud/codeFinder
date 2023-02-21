@@ -20,7 +20,7 @@ class fileGUI:
         self._path = StringVar()
         pathEntry = Entry(master, textvariable=self._path, width=30)
         pathEntry.place(x=5, y=30)
-        self._path.set("C:")
+        self._path.set("C:\\")
 
         # checkboxes for user to choose code files to search for
         self._pyTracker = StringVar()

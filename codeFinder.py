@@ -21,9 +21,13 @@ class CodeFinder:
                     if file.endswith(suffix):
                         fileFound = True
                         path = os.path.join(root, file)
-
-                        file = open(path, encoding='utf-8')
-                        lines = file.readlines()
+                        try:
+                            file = open(path, encoding='utf-8')
+                            lines = file.readlines()
+                        except UnicodeError:
+                            file.close()
+                            file = open(path, encoding="latin1")
+                            lines = file.readlines()
                         file.close()
                         nonEmptyLines = len(list(filter(None, lines))) # don't include empty lines
                         bytes = os.stat(path).st_size
@@ -49,9 +53,13 @@ class CodeFinder:
                         temp = searchWords.copy()
                         tempCount = 0
                         path = os.path.join(root, file)
-
-                        file = open(path, encoding='utf-8')
-                        lines = file.readlines()
+                        try:
+                            file = open(path, encoding='utf-8')
+                            lines = file.readlines()
+                        except UnicodeError:
+                            file.close()
+                            file = open(path, encoding="latin1")
+                            lines = file.readlines()
                         file.close()
                         for line in lines:
                             if searchWordFound:
@@ -91,9 +99,13 @@ class CodeFinder:
                         break
                     if file.endswith(suffix):
                         path = os.path.join(root, file)
-
-                        file = open(path, encoding='utf-8')
-                        lines = file.readlines()
+                        try:
+                            file = open(path, encoding='utf-8')
+                            lines = file.readlines()
+                        except UnicodeError:
+                            file.close()
+                            file = open(path, encoding="latin1")
+                            lines = file.readlines()
                         file.close()
                         for line in lines:
                             if searchWordFound:
