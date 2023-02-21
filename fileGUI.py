@@ -2,6 +2,7 @@ from tkinter import Label, Entry, StringVar, Checkbutton, IntVar, Listbox, Butto
 from tkinter.tix import *
 from codeFinder import CodeFinder
 import os
+import win32api
 
 class fileGUI:
     # creates layout for a code file info tracker GUI that lets user easily open matches
@@ -20,7 +21,7 @@ class fileGUI:
         self._path = StringVar()
         pathEntry = Entry(master, textvariable=self._path, width=30)
         pathEntry.place(x=5, y=30)
-        self._path.set("C:\\")
+        self._path.set(self._getDrive())
 
         # checkboxes for user to choose code files to search for
         self._pyTracker = StringVar()
@@ -68,6 +69,15 @@ class fileGUI:
 
         self._infoFrame = Frame(master)
         self._infoFrame.place(x=5, y=350)
+
+    # retrieves C drive or whichever drive comes first alphabatically
+    def _getDrive(self):
+        drives = win32api.GetLogicalDriveStrings().split("\000")
+        standardDrive = "C:\\"
+        print(drives)
+        if standardDrive in drives:
+            return standardDrive
+        return drives[0]
 
     # Opens code file selected by user
     def _openCodeFile(self, event):
